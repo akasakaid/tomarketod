@@ -278,7 +278,6 @@ class Tomartod:
                 parser = self.marinkitagawa(data)
                 user = json.loads(parser["user"])
                 id = user["id"]
-                now = datetime.now().isoformat(" ").split(".")[0]
                 self.log(
                     f"{hijau}account number : {putih}{no+1}{hijau}/{putih}{len(datas)}"
                 )
@@ -286,9 +285,14 @@ class Tomartod:
                 token = self.get(id)
                 if token is None:
                     token = self.login(data)
+                    if token is None:
+                        continue
                     self.save(id, token)
+
                 if self.is_expired(token):
                     token = self.login(data)
+                    if token is None:
+                        continue
                     self.save(id, token)
                 self.set_authorization(token)
                 result = self.get_balance()
