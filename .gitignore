@@ -1,0 +1,7 @@
+env
+__pycache__
+*.json
+!config.json
+!tokens.json
+*.py
+!bot.py
