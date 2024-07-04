@@ -1,15 +1,14 @@
-# tomarketod
+# Tomarketod
 
 Auto Claim for tomarketod Telegram Bot
 
 # Table of Contents
 
-- [tomarketod](#tomarketod)
+- [Tomarketod](#tomarketod)
 - [Table of Contents](#table-of-contents)
 - [Warning](#warning)
 - [Features](#features)
 - [How to Use](#how-to-use)
-  - [Bot Parameter Feature](#bot-parameter-feature)
   - [Windows](#windows)
   - [Linux](#linux)
   - [Termux](#termux)
@@ -27,18 +26,8 @@ All Risks are borne by the user!
 
 - [x] Auto Claim
 - [x] Multi Account Support
-- [x] Auto Playing Game Support, see [How to Use](#how-to-use)
 
 # How to Use
-
-## Bot Parameter Feature
-
-Here some parameter to enable some feature
-
-| parameter  | description                                       |
-| ---------- | ------------------------------------------------- |
-| --data     | to set custom input data file (default: data.txt) |
-| --autogame | use this for enable autoplaying game              |
 
 ## Windows 
 
