@@ -27,6 +27,7 @@ All Risks are borne by the user!
 
 - [x] Auto Claim
 - [x] Multi Account Support
+- [x] Auto Play Game
 
 # Register
 
