@@ -162,8 +162,9 @@ class Tomartod:
                 self.log(f"{hijau}auto play game is enable !")
                 play_pass = data.get("play_passes")
                 self.log(f"{hijau}game ticket : {putih}{play_pass}")
-                self.play_game_func(play_pass)
-                continue
+                if int(play_pass) > 0:
+                    self.play_game_func(play_pass)
+                    continue
 
             _next = end_farming - timestamp
             return _next
