@@ -303,7 +303,6 @@ class Tomartod:
             _end = int(time.time())
             _tot = _end - _start
             _min = min(list_countdown) - _tot
-            print(_min)
             self.countdown(_min)
 
 
