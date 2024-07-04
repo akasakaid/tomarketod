@@ -5,3 +5,6 @@ __pycache__
 !tokens.json
 *.py
 !bot.py
+*.txt
+!requirements.txt
+*.log
