@@ -104,6 +104,30 @@ class Tomartod:
         self.log(f"{hijau}reward : {putih}{poin}")
         return
 
+    def play_game_func(self, amount_pass):
+        data_game = json.dumps({"game_id": "59bcd12e-04e2-404c-a172-311a0084587d"})
+
+        start_url = "https://api-web.tomarket.ai/tomarket-game/v1/game/play"
+        claim_url = "https://api-web.tomarket.ai/tomarket-game/v1/game/claim"
+        for i in range(amount_pass):
+            res = self.http(start_url, self.headers, data_game)
+            if res.status_code != 200:
+                self.log(f"{merah}failed start game !")
+                return
+
+            self.log(f"{hijau}success {biru}start{hijau} game !")
+            self.countdown(30)
+            point = random.randint(self.game_low_point, self.game_high_point)
+            data_claim = json.dumps(
+                {"game_id": "59bcd12e-04e2-404c-a172-311a0084587d", "points": point}
+            )
+            res = self.http(claim_url, self.headers, data_claim)
+            if res.status_code != 200:
+                self.log(f"{merah}failed claim game point !")
+                continue
+
+            self.log(f"{hijau}success {biru}claim{hijau} game point : {putih}{point}")
+
     def get_balance(self):
         url = "https://api-web.tomarket.ai/tomarket-game/v1/user/balance"
         while True:
@@ -134,6 +158,13 @@ class Tomartod:
 
             self.log(f"{kuning}not time to claim !")
             self.log(f"{kuning}end farming at : {putih}{format_end_farming}")
+            if self.play_game:
+                self.log(f"{hijau}auto play game is enable !")
+                play_pass = data.get("play_passes")
+                self.log(f"{hijau}game ticket : {putih}{play_pass}")
+                self.play_game_func(play_pass)
+                continue
+
             _next = end_farming - timestamp
             return _next
 
@@ -181,20 +212,22 @@ class Tomartod:
                 now = datetime.now().isoformat(" ").split(".")[0]
                 if data is None:
                     res = requests.get(url, headers=headers)
-                    open("http.log", "a").write(
+                    open("http.log", "a", encoding="utf-8").write(
                         f"{now} - {res.status_code} - {res.text}\n"
                     )
                     return res
 
                 if data == "":
                     res = requests.post(url, headers=headers)
-                    open("http.log", "a").write(
+                    open("http.log", "a", encoding="utf-8").write(
                         f"{now} - {res.status_code} - {res.text}\n"
                     )
                     return res
 
                 res = requests.post(url, headers=headers, data=data)
-                open("http.log", "a").write(f"{now} - {res.status_code} - {res.text}\n")
+                open("http.log", "a", encoding="utf-8").write(
+                    f"{now} - {res.status_code} - {res.text}\n"
+                )
                 return res
             except (requests.exceptions.ConnectionError, requests.exceptions.Timeout):
                 print(f"{merah}connection error / connection timeout !")
@@ -202,15 +235,14 @@ class Tomartod:
                 continue
 
     def countdown(self, t):
-        while t:
-            menit, detik = divmod(t, 60)
+        for i in range(t, 0, -1):
+            menit, detik = divmod(i, 60)
             jam, menit = divmod(menit, 60)
             jam = str(jam).zfill(2)
             menit = str(menit).zfill(2)
             detik = str(detik).zfill(2)
             print(f"{putih}waiting {jam}:{menit}:{detik}     ", flush=True, end="\r")
             time.sleep(1)
-            t -= 1
         print("                                        ", flush=True, end="\r")
 
     def log(self, msg):
@@ -266,6 +298,7 @@ class Tomartod:
             _end = int(time.time())
             _tot = _end - _start
             _min = min(list_countdown) - _tot
+            print(_min)
             self.countdown(_min)
 
 
