@@ -5,7 +5,7 @@ import time
 import random
 import argparse
 import requests
-from base64 import b64decode
+from base64 import b64decode, urlsafe_b64decode
 from datetime import datetime
 from urllib.parse import parse_qs
 from colorama import init, Fore, Style
@@ -200,7 +200,7 @@ class Tomartod:
 
     def is_expired(self, token):
         header, payload, sign = token.split(".")
-        deload = b64decode(payload + "==").decode()
+        deload = urlsafe_b64decode(payload + "==").decode()
         jeload = json.loads(deload)
         now = int(datetime.now().timestamp())
         if now > jeload["exp"]:
