@@ -99,7 +99,11 @@ class Tomartod:
             return False
 
         data = res.json().get("data")
-        poin = data["today_points"]
+        if isinstance(data, str):
+            self.log(f"{kuning}maybe already singin")
+            return
+
+        poin = data.get("today_points")
         self.log(
             f"{hijau}success claim {biru}daily sign {hijau}reward : {putih}{poin} !"
         )
@@ -144,7 +148,7 @@ class Tomartod:
             if "daily" not in data.keys():
                 self.daily_claim()
                 continue
-            
+
             if data["daily"] is None:
                 self.daily_claim()
                 continue
@@ -152,7 +156,6 @@ class Tomartod:
             next_daily = data["daily"]["next_check_ts"]
             if timestamp > next_daily:
                 self.daily_claim()
-                continue
 
             if "farming" not in data.keys():
                 self.log(f"{kuning}farming not started !")
