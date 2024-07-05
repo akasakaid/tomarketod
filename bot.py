@@ -98,10 +98,11 @@ class Tomartod:
             self.log(f"{merah}failed claim daily sign,check http.log last line !")
             return False
 
-        self.log(f"{hijau}success claim daily sign !")
         data = res.json().get("data")
         poin = data["today_points"]
-        self.log(f"{hijau}reward : {putih}{poin}")
+        self.log(
+            f"{hijau}success claim {biru}daily sign {hijau}reward : {putih}{poin} !"
+        )
         return
 
     def play_game_func(self, amount_pass):
@@ -142,6 +143,16 @@ class Tomartod:
             self.log(f"{hijau}balance : {putih}{balance}")
             if "daily" not in data.keys():
                 self.daily_claim()
+                continue
+            
+            if data["daily"] is None:
+                self.daily_claim()
+                continue
+
+            next_daily = data["daily"]["next_check_ts"]
+            if timestamp > next_daily:
+                self.daily_claim()
+                continue
 
             if "farming" not in data.keys():
                 self.log(f"{kuning}farming not started !")
