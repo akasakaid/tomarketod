@@ -100,7 +100,7 @@ class Tomartod:
 
         data = res.json().get("data")
         if isinstance(data, str):
-            self.log(f"{kuning}maybe already singned in")
+            self.log(f"{kuning}maybe already signed in")
             return
 
         poin = data.get("today_points")
