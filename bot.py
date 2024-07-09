@@ -256,7 +256,16 @@ class Tomartod:
             print("No need to wait.")
             return
         if RUNNING_IN_DOCKER:
-            print(f"Waiting for {t} seconds...")
+            hours, remainder = divmod(t, 3600)
+            minutes, seconds = divmod(remainder, 60)
+
+            time_str = ""
+            if hours > 0:
+                time_str += f"{hours}h "
+            if minutes > 0 or hours > 0:
+                time_str += f"{minutes}min "
+            time_str += f"{seconds}sec"
+            print(f"Waiting {time_str}...")
             time.sleep(t)
             print("Wait completed.")
         else:
