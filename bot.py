@@ -19,6 +19,8 @@ hitam = Fore.LIGHTBLACK_EX
 reset = Style.RESET_ALL
 line = putih + "~" * 50
 
+RUNNING_IN_DOCKER = os.environ.get('RUNNING_IN_DOCKER')
+
 
 class Tomartod:
     def __init__(self):
