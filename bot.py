@@ -19,6 +19,8 @@ hitam = Fore.LIGHTBLACK_EX
 reset = Style.RESET_ALL
 line = putih + "~" * 50
 
+RUNNING_IN_DOCKER = os.environ.get("RUNNING_IN_DOCKER", "false").lower() == "true"
+
 
 class Tomartod:
     def __init__(self):
@@ -100,7 +102,7 @@ class Tomartod:
 
         data = res.json().get("data")
         if isinstance(data, str):
-            self.log(f"{kuning}maybe already singin")
+            self.log(f"{kuning}maybe already signed in")
             return
 
         poin = data.get("today_points")
@@ -250,15 +252,34 @@ class Tomartod:
                 continue
 
     def countdown(self, t):
-        for i in range(t, 0, -1):
-            menit, detik = divmod(i, 60)
-            jam, menit = divmod(menit, 60)
-            jam = str(jam).zfill(2)
-            menit = str(menit).zfill(2)
-            detik = str(detik).zfill(2)
-            print(f"{putih}waiting {jam}:{menit}:{detik}     ", flush=True, end="\r")
-            time.sleep(1)
-        print("                                        ", flush=True, end="\r")
+        if t <= 0:
+            print("No need to wait.")
+            return
+        if RUNNING_IN_DOCKER:
+            hours, remainder = divmod(t, 3600)
+            minutes, seconds = divmod(remainder, 60)
+
+            time_str = ""
+            if hours > 0:
+                time_str += f"{hours}h "
+            if minutes > 0 or hours > 0:
+                time_str += f"{minutes}min "
+            time_str += f"{seconds}sec"
+            print(f"Waiting {time_str}...")
+            time.sleep(t)
+            print("Wait completed.")
+        else:
+            for i in range(t, 0, -1):
+                menit, detik = divmod(i, 60)
+                jam, menit = divmod(menit, 60)
+                jam = str(jam).zfill(2)
+                menit = str(menit).zfill(2)
+                detik = str(detik).zfill(2)
+                print(
+                    f"{putih}waiting {jam}:{menit}:{detik}     ", flush=True, end="\r"
+                )
+                time.sleep(1)
+            print("                                        ", flush=True, end="\r")
 
     def log(self, msg):
         now = datetime.now().isoformat(" ").split(".")[0]
@@ -267,12 +288,12 @@ class Tomartod:
     def main(self):
         banner = f"""
     {hijau}Auto Claim {biru}Tomarket_ai
-    
+
     {hijau}By: {putih}t.me/AkasakaID
     {hijau}GIthub: {putih}@AkasakaID
-    
-    {hijau}Message: {putih}dont't forget to 'git pull' maybe the script is updated 
-    
+
+    {hijau}Message: {putih}dont't forget to 'git pull' maybe the script is updated
+
         """
         arg = argparse.ArgumentParser()
         arg.add_argument("--data", default="data.txt")

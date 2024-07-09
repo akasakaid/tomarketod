@@ -1,0 +1,14 @@
+services:
+  bot:
+    build: .
+    container_name: tomarket-bot
+    environment:
+      - TERM=xterm
+      - RUNNING_IN_DOCKER=true
+    volumes:
+      - ./bot.py:/app/bot.py
+      - ./config.json:/app/config.json
+      - ./tokens.json:/app/tokens.json
+      - ./data.txt:/app/data.txt
+    restart: unless-stopped
+

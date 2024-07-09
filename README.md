@@ -13,6 +13,7 @@ Auto Claim for tomarket Telegram Bot
   - [Windows](#windows)
   - [Linux](#linux)
   - [Termux](#termux)
+  - [Docker](#docker)
 - [How to Get Data](#how-to-get-data)
 - [Run for 24/7](#run-for-247)
 - [Discussion](#discussion)
@@ -35,12 +36,12 @@ Click the following url to register : https://t.me/Tomarket_ai_bot/app?startapp=
 
 # How to Use
 
-## Windows 
+## Windows
 
 1. Make sure you computer was installed python and git.
-   
+
    python site : [https://python.org](https://python.org)
-   
+
    git site : [https://git-scm.com/](https://git-scm.com/)
 
 2. Clone this repository
@@ -60,7 +61,7 @@ Click the following url to register : https://t.me/Tomarket_ai_bot/app?startapp=
 
 5. Edit `data.txt`, input you data token in `data.txt`, find you token in [How to Get Data](#how-to-get-data). One line for one data account, if you want add you second account add in new line!
 
-6. execute the main program 
+6. execute the main program
    ```
    python bot.py
    ```
@@ -68,7 +69,7 @@ Click the following url to register : https://t.me/Tomarket_ai_bot/app?startapp=
 ## Linux
 
 1. Make sure you computer was installed python and git.
-   
+
    python
    ```shell
    sudo apt install python3 python3-pip
@@ -79,7 +80,7 @@ Click the following url to register : https://t.me/Tomarket_ai_bot/app?startapp=
    ```
 
 2. Clone this repository
-   
+
    ```shell
    git clone https://github.com/akasakaid/tomarketod.git
    ```
@@ -91,14 +92,14 @@ Click the following url to register : https://t.me/Tomarket_ai_bot/app?startapp=
    ```
 
 4. Install the require library
-   
+
    ```
    python3 -m pip install -r requirements.txt
    ```
 
 5. Edit `data.txt`, input you data token in `data.txt`, find you token in [How to Get Data](#how-to-get-data). One line for one data account, if you want add you second account add in new line!
 
-6. execute the main program 
+6. execute the main program
    ```
    python bot.py
    ```
@@ -106,7 +107,7 @@ Click the following url to register : https://t.me/Tomarket_ai_bot/app?startapp=
 ## Termux
 
 1. Make sure you termux was installed python and git.
-   
+
    python
    ```
    pkg install python
@@ -134,9 +135,46 @@ Click the following url to register : https://t.me/Tomarket_ai_bot/app?startapp=
 
 5. Edit `data.txt`, input you data token in `data.txt`, find you token in [How to Get Data](#how-to-get-data). One line for one data account, if you want add you second account add in new line!
 
-6. execute the main program 
+6. execute the main program
    ```
    python bot.py
+   ```
+
+## Docker
+
+1. Make sure python, docker and git are installed on your system.
+
+   python:
+   ```shell
+   sudo apt install python3 python3-pip
+   ```
+   git:
+   ```shell
+   sudo apt install git
+   ```
+   docker:
+   ```shell
+   sudo apt install docker-ce
+   ```
+
+2. Clone this repository
+
+   ```shell
+   git clone https://github.com/akasakaid/tomarketod.git
+   ```
+
+3. Go to tomarketod directory
+
+   ```shell
+   cd tomarketod
+   ```
+
+4. Edit `data.txt`, input you data token in `data.txt`, find you token in [How to Get Data](#how-to-get-data). One line for one data account, if you want add you second account add in new line!
+
+6. Build the image and run container
+
+   ```shell
+   docker compose up -d --build
    ```
 
 # How to Get Data
@@ -145,7 +183,7 @@ How to enable dev tool on teelgram PC : [https://youtu.be/NYxHmck_GjE](https://y
 
 Watch the following video to get data [https://youtu.be/fdbdt-fEoVg](https://youtu.be/fdbdt-fEoVg)
 
-# Run for 24/7 
+# Run for 24/7
 
 You can run the script bot for 24/7 using vps / rdp. You can use `screen` application in vps linux to running the script bot in background process
 
