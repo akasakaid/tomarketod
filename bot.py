@@ -19,8 +19,7 @@ hitam = Fore.LIGHTBLACK_EX
 reset = Style.RESET_ALL
 line = putih + "~" * 50
 
-#RUNNING_IN_DOCKER = os.environ.get('RUNNING_IN_DOCKER')
-RUNNING_IN_DOCKER = os.environ.get('RUNNING_IN_DOCKER', 'false').lower() == 'true'
+RUNNING_IN_DOCKER = os.environ.get("RUNNING_IN_DOCKER", "false").lower() == "true"
 
 
 class Tomartod:
@@ -253,6 +252,9 @@ class Tomartod:
                 continue
 
     def countdown(self, t):
+        if t <= 0:
+            print("No need to wait.")
+            return
         if RUNNING_IN_DOCKER:
             print(f"Waiting for {t} seconds...")
             time.sleep(t)
@@ -264,7 +266,9 @@ class Tomartod:
                 jam = str(jam).zfill(2)
                 menit = str(menit).zfill(2)
                 detik = str(detik).zfill(2)
-                print(f"{putih}waiting {jam}:{menit}:{detik}     ", flush=True, end="\r")
+                print(
+                    f"{putih}waiting {jam}:{menit}:{detik}     ", flush=True, end="\r"
+                )
                 time.sleep(1)
             print("                                        ", flush=True, end="\r")
 
@@ -275,12 +279,12 @@ class Tomartod:
     def main(self):
         banner = f"""
     {hijau}Auto Claim {biru}Tomarket_ai
-    
+
     {hijau}By: {putih}t.me/AkasakaID
     {hijau}GIthub: {putih}@AkasakaID
-    
-    {hijau}Message: {putih}dont't forget to 'git pull' maybe the script is updated 
-    
+
+    {hijau}Message: {putih}dont't forget to 'git pull' maybe the script is updated
+
         """
         arg = argparse.ArgumentParser()
         arg.add_argument("--data", default="data.txt")
