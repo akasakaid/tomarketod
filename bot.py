@@ -40,6 +40,11 @@ class Tomartod:
             key: value[0] for key, value in parse_qs(data).items()
         }
 
+    def set_proxy(self, proxy=None):
+        self.ses = requests.Session()
+        if proxy is not None:
+            self.ses.proxies.update({"http": proxy, "https": proxy})
+
     def set_authorization(self, auth):
         self.headers["authorization"] = auth
 
@@ -60,7 +65,11 @@ class Tomartod:
         if res.status_code != 200:
             self.log(f"{merah}failed fetch token authorization, check http.log !")
             return None
-        token = res.json()["data"]["access_token"]
+        data = res.json().get("data")
+        token = data.get("access_token")
+        if token is None:
+            self.log(f"{merah}failed fetch token authorization, check http.log !")
+            return None
         return token
 
     def start_farming(self):
@@ -100,7 +109,7 @@ class Tomartod:
 
         data = res.json().get("data")
         if isinstance(data, str):
-            self.log(f"{kuning}maybe already singin")
+            self.log(f"{kuning}maybe already sign in")
             return
 
         poin = data.get("today_points")
@@ -111,7 +120,6 @@ class Tomartod:
 
     def play_game_func(self, amount_pass):
         data_game = json.dumps({"game_id": "59bcd12e-04e2-404c-a172-311a0084587d"})
-
         start_url = "https://api-web.tomarket.ai/tomarket-game/v1/game/play"
         claim_url = "https://api-web.tomarket.ai/tomarket-game/v1/game/claim"
         for i in range(amount_pass):
@@ -181,7 +189,7 @@ class Tomartod:
                     continue
 
             _next = end_farming - timestamp
-            return _next
+            return _next + random.randint(self.add_time_min, self.add_time_max)
 
     def load_data(self, file):
         datas = open(file).read().splitlines()
@@ -199,6 +207,8 @@ class Tomartod:
         self.play_game = config["play_game"]
         self.game_low_point = config["game_point"]["low"]
         self.game_high_point = config["game_point"]["high"]
+        self.add_time_min = config["additional_time"]["min"]
+        self.add_time_max = config["additional_time"]["max"]
 
     def save(self, id, token):
         tokens = json.loads(open("tokens.json").read())
@@ -226,24 +236,28 @@ class Tomartod:
             try:
                 now = datetime.now().isoformat(" ").split(".")[0]
                 if data is None:
-                    res = requests.get(url, headers=headers)
+                    res = self.ses.get(url, headers=headers, timeout=100)
                     open("http.log", "a", encoding="utf-8").write(
                         f"{now} - {res.status_code} - {res.text}\n"
                     )
                     return res
 
                 if data == "":
-                    res = requests.post(url, headers=headers)
+                    res = self.ses.post(url, headers=headers, timeout=100)
                     open("http.log", "a", encoding="utf-8").write(
                         f"{now} - {res.status_code} - {res.text}\n"
                     )
                     return res
 
-                res = requests.post(url, headers=headers, data=data)
+                res = self.ses.post(url, headers=headers, data=data, timeout=100)
                 open("http.log", "a", encoding="utf-8").write(
                     f"{now} - {res.status_code} - {res.text}\n"
                 )
                 return res
+            except requests.exceptions.ProxyError:
+                print(f"{merah}bad proxy !")
+                time.sleep(1)
+
             except (requests.exceptions.ConnectionError, requests.exceptions.Timeout):
                 print(f"{merah}connection error / connection timeout !")
                 time.sleep(1)
@@ -277,6 +291,7 @@ class Tomartod:
         arg = argparse.ArgumentParser()
         arg.add_argument("--data", default="data.txt")
         arg.add_argument("--config", default="config.json")
+        arg.add_argument("--proxy", default="proxies.txt")
         arg.add_argument("--marinkitagawa", action="store_true")
         args = arg.parse_args()
         if not args.marinkitagawa:
@@ -284,12 +299,19 @@ class Tomartod:
         print(banner)
         self.load_config(args.config)
         datas = self.load_data(args.data)
+        proxies = open(args.proxy).read().splitlines()
         self.log(f"{biru}total account : {putih}{len(datas)}")
+        self.log(f"{biru}total proxies detected : {putih}{len(proxies)}")
+        use_proxy = True if len(proxies) > 0 else False
+        self.log(f"{hijau}use proxy : {putih}{use_proxy}")
         print(line)
         while True:
             list_countdown = []
             _start = int(time.time())
             for no, data in enumerate(datas):
+                if use_proxy:
+                    proxy = proxies[no % len(proxies)]
+                self.set_proxy(proxy if use_proxy else None)
                 parser = self.marinkitagawa(data)
                 user = json.loads(parser["user"])
                 id = user["id"]
