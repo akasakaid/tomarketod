@@ -10,6 +10,8 @@ Auto Claim for tomarket Telegram Bot
 - [Features](#features)
 - [Register](#register)
 - [How to Use](#how-to-use)
+  - [About Config](#about-config)
+  - [About Proxy](#about-proxy)
   - [Windows](#windows)
   - [Linux](#linux)
   - [Termux](#termux)
@@ -28,12 +30,42 @@ All Risks are borne by the user!
 - [x] Auto Claim
 - [x] Multi Account Support
 - [x] Auto Play Game
+- [x] Proxy Support
 
 # Register
 
 Click the following url to register : https://t.me/Tomarket_ai_bot/app?startapp=0000009G
 
 # How to Use
+
+## About Config
+
+| Name            | Description                                                                                |
+| --------------- | ------------------------------------------------------------------------------------------ |
+| interval        | downtime between account                                                                   |
+| play_game       | key for enable auto play game after claim                                                  |
+| game_point      | low : minimum earn from play game <br>high : maximum earn from play game                   |
+| additional_time | min : minimum addition time for next claim <br> max : maximum addition time for next claim |
+
+## About Proxy
+
+You can add your proxy list in `proxies.txt` and proxy format is like example below :
+
+Format :
+
+```
+http://host:port
+http://user:pass@host:port
+```
+
+Example :
+
+```
+http://127.0.0.1:6969
+http://user:pass@127.0.0.1:6969
+socks5://127.0.0.1:6969
+socks5://user:pass@127.0.0.1:6969
+```
 
 ## Windows 
 
