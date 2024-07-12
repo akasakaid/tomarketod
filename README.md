@@ -49,6 +49,8 @@ Click the following url to register : https://t.me/Tomarket_ai_bot/app?startapp=
 
 ## About Proxy
 
+Register on this site to get free proxy : [Here](https://www.webshare.io/?referral_code=dwj0m9cdi4mp)
+
 You can add your proxy list in `proxies.txt` and proxy format is like example below :
 
 Format :
