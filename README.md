@@ -18,7 +18,7 @@ Auto Claim for tomarket Telegram Bot
 - [How to Get Data](#how-to-get-data)
 - [Run for 24/7](#run-for-247)
 - [Discussion](#discussion)
-- [Support](#support)
+- [Support My Work](#support-my-work)
 - [Thank you \< 3](#thank-you--3)
 
 # Warning
@@ -187,12 +187,12 @@ You can run the script bot for 24/7 using vps / rdp. You can use `screen` applic
 
 If you have an question or something you can ask in here : [@sdsproject_chat](https://t.me/sdsproject_chat)
 
-# Support
+# Support My Work
 
 To support me you can buy me a coffee via website in below
 
 - Send IDR directly via QRIS : [https://s.id/nusanqr](https://s.id/nusanqr)
-- https://trakteer.id/fawwazthoerif/tip
-- https://sociabuzz.com/fawwazthoerif/tribe
+- [Indonesian] https://trakteer.id/fawwazthoerif/tip
+- [Global] https://sociabuzz.com/fawwazthoerif/tribe
 
 # Thank you < 3
