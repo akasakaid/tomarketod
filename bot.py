@@ -145,6 +145,9 @@ class Tomartod:
         url = "https://api-web.tomarket.ai/tomarket-game/v1/user/balance"
         while True:
             res = self.http(url, self.headers, "")
+            if res.status_code != 200:
+                self.log(f"{merah}failed fetch balance !")
+                continue
             data = res.json().get("data")
             if data is None:
                 self.log(f"{merah}failed get data !")
@@ -192,7 +195,7 @@ class Tomartod:
             return _next + random.randint(self.add_time_min, self.add_time_max)
 
     def load_data(self, file):
-        datas = open(file).read().splitlines()
+        datas = [i for i in open(file).read().splitlines() if len(i) > 0]
         if len(datas) <= 0:
             print(
                 f"{merah}0 account detected from {file}, fill your data in {file} first !{reset}"
@@ -237,19 +240,10 @@ class Tomartod:
                 now = datetime.now().isoformat(" ").split(".")[0]
                 if data is None:
                     res = self.ses.get(url, headers=headers, timeout=100)
-                    open("http.log", "a", encoding="utf-8").write(
-                        f"{now} - {res.status_code} - {res.text}\n"
-                    )
-                    return res
-
-                if data == "":
+                elif data == "":
                     res = self.ses.post(url, headers=headers, timeout=100)
-                    open("http.log", "a", encoding="utf-8").write(
-                        f"{now} - {res.status_code} - {res.text}\n"
-                    )
-                    return res
-
-                res = self.ses.post(url, headers=headers, data=data, timeout=100)
+                else:
+                    res = self.ses.post(url, headers=headers, data=data, timeout=100)
                 open("http.log", "a", encoding="utf-8").write(
                     f"{now} - {res.status_code} - {res.text}\n"
                 )
