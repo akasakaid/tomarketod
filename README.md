@@ -43,7 +43,7 @@ Click the following url to register : https://t.me/Tomarket_ai_bot/app?startapp=
 | Name            | Description                                                                                |
 | --------------- | ------------------------------------------------------------------------------------------ |
 | interval        | downtime between account                                                                   |
-| play_game       | key for enable auto play game after claim                                                  |
+| play_game       | value must bool (true/false) set true for enable auto play game after claim                |
 | game_point      | low : minimum earn from play game <br>high : maximum earn from play game                   |
 | additional_time | min : minimum addition time for next claim <br> max : maximum addition time for next claim |
 
